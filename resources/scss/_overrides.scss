@@ -1,0 +1,17 @@
+// Suggested location to add your overrides so that migration would be easy by just updating the SASS folder in the future
+
+body {
+    #app {
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+    }
+}
+.field{
+    margin-bottom: 1rem;
+    > label {
+        display: inline-block;
+        margin-bottom: 0.5rem;
+    }
+}

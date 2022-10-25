@@ -23,7 +23,11 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
+Route::group(['prefix'=>'auth'], function () {
+    Route::get('login', function () {
+        return Inertia::render('Auth/Login');
+    });
+});
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

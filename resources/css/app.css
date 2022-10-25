@@ -1,3 +1,6 @@
-@tailwind base;
-@tailwind components;
+@import "primevue/resources/primevue.min.css";
+@import "primevue/resources/themes/tailwind-light/theme.css";
+@import "primeicons/primeicons.css";
 @tailwind utilities;
+
+
