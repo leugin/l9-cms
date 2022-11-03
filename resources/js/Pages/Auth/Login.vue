@@ -1,12 +1,16 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import { Head, Link, useForm , usePage} from '@inertiajs/inertia-vue3';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
-
+import FormInput from "@/Components/FormInput.vue";
 defineProps({
     canResetPassword: Boolean,
     status: String,
+    errors : {
+        type: Object,
+        default: {}
+    }
 });
 
 const form = useForm({
@@ -28,24 +32,23 @@ const submit = () => {
         <form @submit.prevent="submit">
             <div class="card p-fluid">
                 <h2 class="text-center">Login</h2>
-
-                <div class="field ">
-                    <span class="p-float-label">
-                        <InputText id="email" type="text" v-model="form.email" />
-                        <label for="email">Email</label>
-                    </span>
-                    <small id="username-help" class="p-error">Enter your username to reset your password.</small>
-
-                </div>
-                <div class="field">
-                    <label for="password">Contraseña</label>
-                    <InputText id="password" type="password" v-model="form.password" />
-
-                </div>
-
+                <FormInput id="email" label="Email" :error="errors.email">
+                    <InputText type="text" v-model="form.email" id="email" />
+                </FormInput>
+                <FormInput id="password" label="Password" :error="errors.password">
+                    <InputText type="password" v-model="form.password" id="email" />
+                </FormInput>
                 <Button label="Login" class="w-full p-3 text-xl" type="submit"></button>
+
+
 
             </div>
         </form>
     </GuestLayout>
 </template>
+
+<style scoped lang="scss">
+.field {
+    width: 400px;
+}
+</style>
