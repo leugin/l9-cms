@@ -186,6 +186,7 @@ return [
          * Package Service Providers...
          */
 
+        \App\Services\Management\Providers\ManagementServiceProvider::class,
         /*
          * Application Service Providers...
          */

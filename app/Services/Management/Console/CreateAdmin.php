@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\Management;
+namespace App\Services\Management\Console;
 
 use App\Models\Admin;
 use Illuminate\Console\Command;
