@@ -9,9 +9,13 @@ import { Link } from '@inertiajs/inertia-vue3';
 
 const showingNavigationDropdown = ref(false);
 </script>
-
+<style lang="scss">
+#body {
+    width: 100vw;
+}
+</style>
 <template>
-    <div>
+    <div id="body">
         <div class="min-h-screen bg-gray-100">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
