@@ -20,7 +20,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('login'), {
+    form.post(route('management.login.create'), {
         onFinish: () => form.reset('password'),
     });
 };
