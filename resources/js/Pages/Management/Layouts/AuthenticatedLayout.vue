@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import {computed, ref} from 'vue';
 import ApplicationMenu from '@/Components/AppMenu.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
@@ -7,27 +7,28 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import Sidebar from 'primevue/sidebar';
 import { onUnmounted, onMounted } from 'vue'
+import { usePage } from '@inertiajs/inertia-vue3'
+
 const showingNavigationDropdown = ref(false);
-const openNav = ref(false);
- const escape = (evt)  => {
+const openNav = ref(true);
+const escape = (evt)  => {
     if (openNav.value && evt.code === 'Escape') {
         openNav.value = false;
     }
 }
+const menus = computed(() => {
+    return  usePage().props.value.auth.menus ?? [];
+});
 
 onMounted(() => {
-    window.addEventListener('keydown', escape )
+    window.addEventListener('keydown', escape );
+    console.log(menus);
 })
 
 onUnmounted(() => {
     window.removeEventListener('keydown', escape )
 })
 </script>
-<style lang="scss">
-#body {
-    width: 100vw;
-}
-</style>
 <template>
     <div id="body">
         <div class="min-h-screen bg-gray-100">
@@ -37,7 +38,7 @@ onUnmounted(() => {
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
-                                <ApplicationMenu class="block h-9 w-auto"  @click="openNav = !openNav"/>
+                            <ApplicationMenu class="block h-9 w-auto"  @click="openNav = !openNav"/>
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -111,7 +112,41 @@ onUnmounted(() => {
             </main>
         </div>
         <Sidebar v-model:visible="openNav" position="full">
-            Content
+            <aside class=""  >
+                <div class="max-w-10xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <ul  class="menu  grid grid-cols-4 gap-4  justify-evenly " >
+                        <li v-for=" menu in menus" class=" py-6 bg-sky-500/75">
+                            <ul>
+                                <li >
+                                    <label>
+                                        {{menu.label}}
+                                    </label>
+                                </li>
+                                <li class="sub-menu">
+                                    <ol >
+                                        <li  v-for=" action in menu.actions" class="py-2">
+                                            <a v-if="action.action.type='url'" :href="action.action.options.url">
+                                                <label>{{action.label}}</label>
+                                            </a>
+
+                                        </li>
+                                    </ol>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </aside>
+
         </Sidebar>
     </div>
 </template>
+<style lang="sass">
+#body
+    width: 100vw
+
+
+ul
+    list-style: none
+</style>

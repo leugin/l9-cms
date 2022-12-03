@@ -2,12 +2,15 @@
 
 namespace App\Http\Middleware;
 
+use App\Operations\GetMenusOperation;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Lucid\Bus\ServesFeatures;
 use Tightenco\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
 {
+    use ServesFeatures;
     /**
      * The root template that is loaded on the first page visit.
      *
@@ -18,10 +21,10 @@ class HandleInertiaRequests extends Middleware
     /**
      * Determine the current asset version.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return string|null
      */
-    public function version(Request $request)
+    public function version(Request $request): ?string
     {
         return parent::version($request);
     }
@@ -29,20 +32,25 @@ class HandleInertiaRequests extends Middleware
     /**
      * Define the props that are shared by default.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return array
      */
-    public function share(Request $request)
+    public function share(Request $request): array
     {
+        $menus = $this->serve(GetMenusOperation::class, [
+            'user'=>$request->user()
+        ]);
+
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
+                'menus'=>$menus
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
                     'location' => $request->url(),
                 ]);
-            },
+            }
         ]);
     }
 }

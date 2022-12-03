@@ -19,7 +19,7 @@ class CreateAdmin extends Command
      *
      * @var string
      */
-    protected $description = 'create a new admind';
+    protected $description = 'create a new admin';
 
     /**
      * Execute the console command.

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasPermissions;
 
 /**
  *
@@ -18,7 +19,7 @@ use Laravel\Sanctum\HasApiTokens;
  */
 class Admin extends Authenticatable
 {
-    use  HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use  HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasPermissions ;
 
     /**
      * @var string[]
