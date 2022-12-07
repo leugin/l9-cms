@@ -10,7 +10,7 @@ import { onUnmounted, onMounted } from 'vue'
 import { usePage } from '@inertiajs/inertia-vue3'
 
 const showingNavigationDropdown = ref(false);
-const openNav = ref(true);
+const openNav = ref(false);
 const escape = (evt)  => {
     if (openNav.value && evt.code === 'Escape') {
         openNav.value = false;
@@ -22,7 +22,6 @@ const menus = computed(() => {
 
 onMounted(() => {
     window.addEventListener('keydown', escape );
-    console.log(menus);
 })
 
 onUnmounted(() => {
@@ -114,9 +113,9 @@ onUnmounted(() => {
         <Sidebar v-model:visible="openNav" position="full">
             <aside class=""  >
                 <div class="max-w-10xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <ul  class="menu  grid grid-cols-4 gap-4  justify-evenly " >
+                    <ul  class="menu  grid md:grid-cols-4 md:gap-4 gap-1 justify-evenly px-0" >
                         <li v-for=" menu in menus" class=" py-6 bg-sky-500/75">
-                            <ul>
+                            <ul class="px-2">
                                 <li >
                                     <label>
                                         {{menu.label}}

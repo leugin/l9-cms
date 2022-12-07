@@ -29,6 +29,15 @@ Route::group(['prefix' => 'management'], function() {
     Route::group(['middleware'=>['auth:admin']], function() {
         Route::get('dashboard', [DashboardController::class, 'show'])
             ->name('management.dashboard');
+        Route::resource('admins', \App\Services\Management\Http\Controllers\AdminController::class)
+            ->names([
+                'index'=>'management.admins.index'
+            ])
+            ->only('index')
+        ;
+        Route::get('admins/datatable', [\App\Services\Management\Http\Controllers\AdminController::class, 'datatable'])
+            ->name('management.admins.datatable')
+        ;
     });
 
 });

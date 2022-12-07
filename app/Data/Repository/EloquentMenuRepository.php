@@ -38,7 +38,7 @@ class EloquentMenuRepository implements MenuRepository
     {
         return [
             Menu::make('Gestion de administradores', 'management-admins')
-                ->addSubMenu('Listar', 'list' , Action::url(route('management.dashboard')) )
+                ->addSubMenu('Listar', 'list' , Action::url(route('management.admins.index')) )
                 ->addSubMenu('Crear', 'creat' , Action::url(route('management.dashboard')) ),
             Menu::make('Gestion de usuarios', 'management-admins')
                 ->addSubMenu('Listar', 'list' , Action::url(route('management.dashboard')) )

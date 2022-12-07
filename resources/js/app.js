@@ -8,6 +8,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import PrimeVue from "primevue/config";
 import Sidebar from 'primevue/sidebar';
+import panel from 'primevue/panel';
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
@@ -20,6 +21,7 @@ createInertiaApp({
             .use(ZiggyVue, Ziggy)
             .use(PrimeVue)
             .component('Sidebar', Sidebar)
+            .component('Panel', panel)
             .mount(el);
     },
 });
