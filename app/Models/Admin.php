@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasPermissions;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  *
@@ -22,7 +23,7 @@ use Spatie\Permission\Traits\HasPermissions;
  */
 class Admin extends Authenticatable
 {
-    use  HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasPermissions ;
+    use  HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasPermissions, HasRoles ;
 
     protected $hidden = [
         'password'

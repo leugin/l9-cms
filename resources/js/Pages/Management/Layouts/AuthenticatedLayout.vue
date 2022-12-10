@@ -8,6 +8,7 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import Sidebar from 'primevue/sidebar';
 import { onUnmounted, onMounted } from 'vue'
 import { usePage } from '@inertiajs/inertia-vue3'
+import { Link } from '@inertiajs/inertia-vue3';
 
 const showingNavigationDropdown = ref(false);
 const openNav = ref(false);
@@ -77,7 +78,7 @@ onUnmounted(() => {
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                        <ResponsiveNavLink :href="route('dashboard')" >
                             Dashboard
                         </ResponsiveNavLink>
                     </div>
@@ -124,9 +125,9 @@ onUnmounted(() => {
                                 <li class="sub-menu">
                                     <ol >
                                         <li  v-for=" action in menu.actions" class="py-2">
-                                            <a v-if="action.action.type='url'" :href="action.action.options.url">
+                                            <Link v-if="action.type='redirect'" :href="route(action.route)">
                                                 <label>{{action.label}}</label>
-                                            </a>
+                                            </Link>
 
                                         </li>
                                     </ol>

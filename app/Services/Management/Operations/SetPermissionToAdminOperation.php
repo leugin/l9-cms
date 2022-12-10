@@ -2,8 +2,10 @@
 
 namespace App\Services\Management\Operations;
 
+use App\Data\Dto\Page;
+use App\Data\Dto\TableAction;
 use App\Domains\Permission\Jobs\CreateOrFirstPermissionJob;
-use App\Foundation\Menus\Data\Repository\MenuRepository;
+use App\Foundation\Modules\Data\Repository\ModuleRepository;
 use App\Models\Admin;
 use Lucid\Units\Operation;
 
@@ -26,10 +28,10 @@ class SetPermissionToAdminOperation extends Operation
     /**
      * Execute the operation.
      *
-     * @param MenuRepository $repository
+     * @param ModuleRepository $repository
      * @return void
      */
-    public function handle(MenuRepository $repository):bool
+    public function handle(ModuleRepository $repository):bool
     {
         $menus = $repository->all();
 
@@ -40,12 +42,8 @@ class SetPermissionToAdminOperation extends Operation
 
         if ($this->all) {
              foreach ($menus as $menu) {
-                 $this->run(CreateOrFirstPermissionJob::class, [
-                    'name'=>$menu->getSlugPermission(),
-                    'guard'=>$this->guard
-                ]);
-                $admin->givePermissionTo($menu->getSlugPermission());
-                foreach ($menu->actions as $action) {
+
+                foreach ($menu->getPermission() as $action) {
 
                     $this->run(CreateOrFirstPermissionJob::class, [
                         'name'=>$action->getSlugPermission(),
@@ -54,6 +52,23 @@ class SetPermissionToAdminOperation extends Operation
                     $admin->givePermissionTo($action->getSlugPermission());
                 }
             }
+//
+//            $manage = new ManagementTable(
+//                route('management.admins.datatable'),
+//                __('Gestion de administradores'),
+//                [
+//                    TableAction::edit('admins'),
+//                    TableAction::create('admins')
+//                ]
+//            );
+//
+//             foreach ($manage->actions as $action) {
+//                 $this->run(CreateOrFirstPermissionJob::class, [
+//                     'name'=>$action->getSlugPermission(),
+//                     'guard'=>$this->guard
+//                 ]);
+//                 $admin->givePermissionTo($action->getSlugPermission());
+//             }
         }
         return true;
     }

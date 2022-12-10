@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Foundation\Menus;
+namespace App\Foundation\Modules;
 
-use App\Data\Repository\EloquentMenuRepository;
-use App\Foundation\Menus\Data\Repository\MenuRepository;
+use App\Data\Repository\EloquentModuleRepository;
+use App\Foundation\Modules\Data\Repository\ModuleRepository;
 use Illuminate\Support\ServiceProvider;
 
-class MenuProvider extends ServiceProvider
+class ModuleProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -15,7 +15,7 @@ class MenuProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(MenuRepository::class, EloquentMenuRepository::class);
+        $this->app->singleton(ModuleRepository::class, EloquentModuleRepository::class);
     }
 
     /**

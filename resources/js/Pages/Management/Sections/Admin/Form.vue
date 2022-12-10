@@ -13,21 +13,18 @@ const totalRecords = ref(0);
 const perPage = ref(50);
 const loading = ref(true);
 
-const api = new CrudService(route(usePage().props.value.route));
+const api = new CrudService(usePage().props.value.api);
 
 const onPage = (ev) => {
     load({page: ev.page + 1})
 }
 
-
-
 const hasAllow = (permission) => {
     return usePage()
         .props
         .value
-        .auth
-        .permissions
-        .findIndex(item => item === permission) !== -1;
+        .actions
+        .findIndex(item => item.type === permission) !== -1;
 }
 const load = (options = {}) => {
     loading.value= true;
@@ -69,46 +66,15 @@ onMounted(() => {
             <template #header>
                 <div class="flex justify-between w-full	">
                     <h5 class="my-auto" style="margin-top: auto;margin-bottom: auto;">{{title}}</h5>
-                    <Link :href="route('management.admins.create')"  v-if="hasAllow('management-admins-create')">
+                    <div>
                         <Button label="Agregar" icon="pi pi-save"  class="p-button-info   p-button-sm  "/>
-                    </Link>
+
+                    </div>
                 </div>
 
             </template>
-            <DataTable
-                :value="products"
-                dataKey="id"
-                :paginator="true"
-                :rows="perPage"
-                :totalRecords="totalRecords"
-                :lazy="true"
-                :loading="loading"
-                :scrollable="true"
-                scroll-height="calc(100vh - 190px)"
-                @page="onPage($event)"
-                class="table-floating-paginator "
+            <h3>Hola</h3>
 
-
-            >
-                <Column field="id" header="#" style="max-width: 30px"></Column>
-                <Column field="name" header="Nombre" style="width: auto"></Column>
-                <Column  header="-" style="max-width: 240px">
-                    <template #body="slotProps">
-                            <span class="p-buttonset m-2">
-                                <Link :href="route('management.admins.edit', [slotProps.data.id])"
-                                      v-if="hasAllow('management-admins-edit')" >
-                                    <Button label="Editar" icon="pi pi-pencil" class="p-button-text p-button-warning p-button-sm "
-                                    />
-                                </Link>
-                                <Button label="Delete" icon="pi pi-trash"  class="p-button-text p-button-danger   p-button-sm "
-                                        v-if="hasAllow('management-admins-delete')"
-                                />
-                            </span>
-
-                    </template>
-                </Column>
-
-            </DataTable>
         </Panel>
     </AuthenticatedLayout>
 </template>

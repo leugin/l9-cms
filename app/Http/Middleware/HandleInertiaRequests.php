@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Admin;
 use App\Operations\GetMenusOperation;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -37,14 +38,18 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        /**@var Admin $user*/
+        $user = $request->user('admin');
         $menus = $this->serve(GetMenusOperation::class, [
-            'user'=>$request->user()
+            'user'=>$user
         ]);
+
 
         return array_merge(parent::share($request), [
             'auth' => [
-                'user' => $request->user(),
-                'menus'=>$menus
+                'user' => $user,
+                'menus'=>$menus,
+                'permissions'=>$user ? $user->getAllPermissions()->pluck('name')->toArray(): []
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [

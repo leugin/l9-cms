@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Foundation\Menus\Traits;
+namespace App\Foundation\Modules\Traits;
 
 /**
  *

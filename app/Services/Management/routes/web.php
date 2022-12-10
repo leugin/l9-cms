@@ -29,15 +29,32 @@ Route::group(['prefix' => 'management'], function() {
     Route::group(['middleware'=>['auth:admin']], function() {
         Route::get('dashboard', [DashboardController::class, 'show'])
             ->name('management.dashboard');
-        Route::resource('admins', \App\Services\Management\Http\Controllers\AdminController::class)
-            ->names([
-                'index'=>'management.admins.index'
-            ])
-            ->only('index')
-        ;
-        Route::get('admins/datatable', [\App\Services\Management\Http\Controllers\AdminController::class, 'datatable'])
-            ->name('management.admins.datatable')
-        ;
+        Route::group(['prefix'=>'admins'], function ()
+        {
+            Route::get('', [\App\Services\Management\Http\Controllers\AdminController::class,'index'])
+                ->name('management.admins.index')
+                ->middleware('can:management-admins-index')
+            ;
+
+            Route::get('create', [\App\Services\Management\Http\Controllers\AdminController::class,'create'])
+                ->name('management.admins.create')
+                ->middleware('can:management-admins-create');
+
+            Route::get('edit/{admin}', [\App\Services\Management\Http\Controllers\AdminController::class,'create'])
+                ->name('management.admins.edit')
+                ->middleware('can:management-admins-edit');
+
+            Route::put('{admin}', [\App\Services\Management\Http\Controllers\AdminController::class,'edit'])
+                ->name('management.admins.update')
+                ->middleware('can:management-admins-update');
+
+            Route::get('datatable', [\App\Services\Management\Http\Controllers\AdminController::class, 'datatable'])
+                ->name('management.admins.datatable')
+                ->middleware('can:management-admins-datatable')
+            ;
+        });
+
+
     });
 
 });

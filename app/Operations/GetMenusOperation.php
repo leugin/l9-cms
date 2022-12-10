@@ -2,29 +2,54 @@
 
 namespace App\Operations;
 
-use App\Foundation\Menus\Data\Repository\MenuRepository;
+use App\Foundation\Modules\Data\Factory\ActionType;
+use App\Foundation\Modules\Data\Repository\ModuleRepository;
 use App\Models\Admin;
 use Lucid\Units\Operation;
 
 class GetMenusOperation extends Operation
 {
-    private $user;
 
     /**
-     * @param Admin|null $user
+     * @param Admin $user
      */
-    public function __construct(?Admin $user)
+    public function __construct(private readonly Admin $user)
     {
-        $this->user = $user;
+
     }
 
     /**
      * Execute the operation.
      *
+     * @param ModuleRepository $repository
      * @return array
      */
-    public function handle(MenuRepository $repository): array
+    public function handle(ModuleRepository $repository): array
     {
-        return  $this->user ? $repository->findByUser($this->user) : [];
+        $menus = [];
+
+        if ($this->user) {
+            $all = $repository->all();
+            foreach ($all as $module) {
+                $available = [];
+                $coun = sizeof($module->getMenuActions());
+                 foreach ($module->getMenuActions() as $action) {
+
+                     if ($action->type == ActionType::REDIRECT) {
+                         if ($this->user->can($action->getSlugPermission())) {
+                             $available[] = $action;
+                         }
+                     }
+
+                }
+                if (sizeof($available) > 0) {
+                    $menus[] =  [
+                        'label'=>$module->label,
+                        'actions'=>$available
+                    ];
+                }
+            }
+        }
+        return $menus;
     }
 }

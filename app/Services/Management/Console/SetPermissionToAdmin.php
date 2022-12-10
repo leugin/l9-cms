@@ -3,7 +3,7 @@
 namespace App\Services\Management\Console;
 
 use App\Domains\Permission\Jobs\CreateOrFirstPermissionJob;
-use App\Foundation\Menus\Data\Repository\MenuRepository;
+use App\Foundation\Modules\Data\Repository\ModuleRepository;
 use App\Models\Admin;
 use App\Services\Management\Operations\SetPermissionToAdminOperation;
 use Illuminate\Console\Command;

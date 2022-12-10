@@ -185,7 +185,7 @@ return [
         /*
          * Package Service Providers...
          */
-        \App\Foundation\Menus\MenuProvider::class,
+        \App\Foundation\Modules\ModuleProvider::class,
         \App\Services\Management\Providers\ManagementServiceProvider::class,
         /*
          * Application Service Providers...
