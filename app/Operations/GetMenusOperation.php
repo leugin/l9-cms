@@ -13,7 +13,7 @@ class GetMenusOperation extends Operation
     /**
      * @param Admin $user
      */
-    public function __construct(private readonly Admin $user)
+    public function __construct(private readonly ?Admin $user)
     {
 
     }
