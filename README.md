@@ -1,22 +1,34 @@
-# Foobar
+# Master class
 
-Foobar is a Python library for dealing with word pluralization.
+This is a project the has every master class since novembre of 2023
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
-
+### step 1 run container
 ```bash
-pip install foobar
+ dockerc-composer up -d
+```
+
+### step 2 install dependencies
+inside of container run 
+```bash
+ composer install
+```
+### step 3
+create admin
+```bash
+  php artisan management:admin:create demo@demo.com {some password}
+```
+### step 4
+set permission
+```bash
+ php artisan management:admin:assign demo@demo.com --all=true
 ```
 
 ## Usage
-
+inside container run
 ```
- docker composer up -d
  npm run dev
- php artisan management:admin:create demo@demo.com
- php artisan management:admin:assign demo@demo.com --all=true
 ```
 
 ## Contributing
