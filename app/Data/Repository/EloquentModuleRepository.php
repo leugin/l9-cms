@@ -26,7 +26,9 @@ class EloquentModuleRepository implements ModuleRepository
                 'admin',
                 [
                     TableAction::create('management-admins-edit'),
-                    TableAction::load('management.admins.datatable')
+                    TableAction::load('management-admins-datatable'),
+                    TableAction::create('management-admins-store'),
+                    TableAction::create('management-admins-update')
                 ],
                 [
                     Action::redirect('management.admins.index', "List"),

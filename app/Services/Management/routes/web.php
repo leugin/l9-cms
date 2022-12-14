@@ -40,13 +40,17 @@ Route::group(['prefix' => 'management'], function() {
                 ->name('management.admins.create')
                 ->middleware('can:management-admins-create');
 
-            Route::get('edit/{admin}', [\App\Services\Management\Http\Controllers\AdminController::class,'create'])
+            Route::get('edit/{admin}', [\App\Services\Management\Http\Controllers\AdminController::class,'edit'])
                 ->name('management.admins.edit')
                 ->middleware('can:management-admins-edit');
 
-            Route::put('{admin}', [\App\Services\Management\Http\Controllers\AdminController::class,'edit'])
+            Route::put('{admin}', [\App\Services\Management\Http\Controllers\AdminController::class,'update'])
                 ->name('management.admins.update')
                 ->middleware('can:management-admins-update');
+
+            Route::post('', [\App\Services\Management\Http\Controllers\AdminController::class,'store'])
+                ->name('management.admins.store')
+                ->middleware('can:management-admins-store');
 
             Route::get('datatable', [\App\Services\Management\Http\Controllers\AdminController::class, 'datatable'])
                 ->name('management.admins.datatable')

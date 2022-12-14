@@ -1,61 +1,63 @@
 <script setup>
 import AuthenticatedLayout from '@/Pages/Management/Layouts/AuthenticatedLayout.vue';
-import {Head, usePage} from '@inertiajs/inertia-vue3';
-import DataTable from 'primevue/datatable';
+import {Head, useForm, usePage} from '@inertiajs/inertia-vue3';
+import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
-import { Link } from '@inertiajs/inertia-vue3';
-
-import Column from 'primevue/column';
-import CrudService from  '../../../../Services/Admin'
-import {onMounted, ref} from "vue";
-const products = ref([]);
-const totalRecords = ref(0);
+import FormInput from "@/Components/FormInput.vue";
+import {computed, onMounted, ref} from "vue";
 const perPage = ref(50);
 const loading = ref(true);
-
-const api = new CrudService(usePage().props.value.api);
-
-const onPage = (ev) => {
-    load({page: ev.page + 1})
-}
-
-const hasAllow = (permission) => {
-    return usePage()
-        .props
-        .value
-        .actions
-        .findIndex(item => item.type === permission) !== -1;
-}
-const load = (options = {}) => {
-    loading.value= true;
-    api.find(
-        {
-            ...options,
-            per_page:perPage.value
-        }
-    ).then((res)=> {
-        products.value= res.data.data
-        totalRecords.value= res.data.meta.total
-        loading.value= false;
-    }).catch(()=> {loading.value = false})
-}
 defineProps({
-    api:null,
-    debug:null,
-    actions:{
-        type:Array,
-        default: []
+    title:{
+        type:String,
+        default:''
     },
-    title: {
-        type: String,
-        default: ''
+    model: {
+        type:Object,
+        default: null
+    },
+    errors : {
+        type: Object,
+        default: {}
     }
-})
+});
+
+const canSave = computed(() => usePage().props.value.auth.permissions.findIndex(val => val === 'management-admins-store'));
+const canEdit = computed(() => usePage().props.value.auth.permissions.findIndex(val => val === 'management-admins-update'));
+const isEdit = computed(() => !!usePage().props.value.model);
+const form = useForm({
+    name: '',
+    email: '',
+    password: '',
+    remember: false
+});
+
+const submit = () => {
+    if (isEdit) {
+        form.put(route('management.admins.update',[usePage().props.value.model.id]), {
+            onSuccess: (res) => {
+                console.log(res)
+            }
+        });
+    } else  {
+        form.post(route('management.admins.store'), {
+            onFinish: () => form.reset('password'),
+            onSuccess: (res) => {
+                console.log(res)
+            }
+        });
+    }
+
+};
 
 onMounted(() => {
-    load();
-    console.log(usePage().props.value)
-})
+    if (usePage().props.value.model) {
+        const model = usePage().props.value.model;
+        form.name = model.name;
+        form.email = model.email;
+    }
+ })
+
 </script>
 
 <template>
@@ -67,13 +69,29 @@ onMounted(() => {
                 <div class="flex justify-between w-full	">
                     <h5 class="my-auto" style="margin-top: auto;margin-bottom: auto;">{{title}}</h5>
                     <div>
-                        <Button label="Agregar" icon="pi pi-save"  class="p-button-info   p-button-sm  "/>
+                        <Button label="Guardar" icon="pi pi-save"  class="p-button-info p-button-sm" @click="submit" v-if="canSave && !isEdit"/>
+                        <Button label="Actualizar" icon="pi pi-pencil"  class="p-button-info p-button-sm" @click="submit" v-if="canEdit && isEdit"/>
 
                     </div>
                 </div>
 
             </template>
-            <h3>Hola</h3>
+
+            <form @submit.prevent="submit">
+                <div class="">
+                    <div class=" max-w-5xl mx-auto py-6 px-4 sm:px-6 lg:px-8 p-fluid py-3" style="height: calc(100vh - 130px); overflow:auto;">
+                        <FormInput id="name" label="Nombre" :error="errors.name">
+                            <InputText type="text" v-model="form.name" id="name" />
+                        </FormInput>
+                        <FormInput id="email" label="Email" :error="errors.email">
+                            <InputText type="email" v-model="form.email" id="email" />
+                        </FormInput>
+                        <FormInput id="password" label="Password" :error="errors.password" v-if="!isEdit">
+                            <InputText type="password" v-model="form.password" id="email" />
+                        </FormInput>
+                    </div>
+                </div>
+            </form>
 
         </Panel>
     </AuthenticatedLayout>

@@ -19,7 +19,7 @@ class SetPermissionToAdminOperation extends Operation
     public function __construct(
         private readonly string $email,
         private readonly string $guard = 'admin',
-        private readonly bool $all = false
+        private readonly ?bool $all = false
     )
     {
         //
