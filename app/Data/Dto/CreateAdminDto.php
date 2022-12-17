@@ -2,11 +2,15 @@
 
 namespace App\Data\Dto;
 
+use App\Data\Helpers\ReflectionArrayAccess;
+use Illuminate\Contracts\Support\Arrayable;
+
 /**
  *
  */
-class CreateAdminDto
+class CreateAdminDto implements Arrayable
 {
+    use ReflectionArrayAccess;
 
     /**
      * @param string $name

@@ -2,6 +2,7 @@
 
 namespace App\Data\Dto;
 
+use App\Data\Helpers\ReflectionArrayAccess;
 use Illuminate\Contracts\Support\Arrayable;
 
 /**
@@ -9,6 +10,7 @@ use Illuminate\Contracts\Support\Arrayable;
  */
 class UpdateAdminDto implements Arrayable
 {
+    use ReflectionArrayAccess;
 
     /**
      * @param string $name
@@ -36,12 +38,4 @@ class UpdateAdminDto implements Arrayable
         );
     }
 
-    public function toArray()
-    {
-        return [
-            'name'=>$this->name,
-            'email'=>$this->email,
-            'password'=>$this->password
-        ];
-    }
 }
