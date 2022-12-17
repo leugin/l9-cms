@@ -38,7 +38,10 @@ class UpdateAdminFeature extends Feature
 
         $this->run(UpdateAdminJob::class, [
             'id'=>$this->admin->id,
-            'updateAdminDto'=> UpdateAdminDto::makeByArray($request->validated())
+            'updateAdminDto'=> new UpdateAdminDto(
+                name: $request->get('name'),
+                email: $request->get('email'),
+            )
         ]);
         /**@var Admin $admin*/
         return  redirect()->route('management.admins.edit', [$this->admin->id])->with('message', 'save');

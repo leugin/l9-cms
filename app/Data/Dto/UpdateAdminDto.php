@@ -17,7 +17,7 @@ class UpdateAdminDto implements Arrayable
      * @param string $email
      * @param string|null $password
      */
-    private function __construct(
+    public function __construct(
         public string $name,
         public string $email,
         public ?string $password = null
