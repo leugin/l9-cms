@@ -4,6 +4,8 @@ namespace App\Services\Management\Features;
 
 use App\Data\Dto\Page;
 use App\Data\Dto\TableAction;
+use App\Data\Dto\UpdateAdminDto;
+use App\Domains\Admin\Jobs\UpdateAdminJob;
 use App\Domains\Admin\Requests\StoreAdminRequest;
 use App\Domains\Admin\Requests\UpdateAdminRequest;
 use App\Models\Admin;
@@ -33,8 +35,12 @@ class UpdateAdminFeature extends Feature
      */
     public function handle(UpdateAdminRequest $request): RedirectResponse
     {
+
+        $this->run(UpdateAdminJob::class, [
+            'id'=>$this->admin->id,
+            'updateAdminDto'=> UpdateAdminDto::makeByArray($request->validated())
+        ]);
         /**@var Admin $admin*/
-        $this->admin->update($request->validated());
         return  redirect()->route('management.admins.edit', [$this->admin->id])->with('message', 'save');
     }
 

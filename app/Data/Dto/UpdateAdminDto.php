@@ -2,21 +2,23 @@
 
 namespace App\Data\Dto;
 
+use Illuminate\Contracts\Support\Arrayable;
+
 /**
  *
  */
-class CreateAdminDto
+class UpdateAdminDto implements Arrayable
 {
 
     /**
      * @param string $name
      * @param string $email
-     * @param string $password
+     * @param string|null $password
      */
     private function __construct(
         public string $name,
         public string $email,
-        public string $password
+        public ?string $password = null
     )
     {
     }
@@ -30,7 +32,16 @@ class CreateAdminDto
         return  new self(
             $params['name'],
             $params['email'],
-            $params['password']
+            $params['password'] ?? null
         );
+    }
+
+    public function toArray()
+    {
+        return [
+            'name'=>$this->name,
+            'email'=>$this->email,
+            'password'=>$this->password
+        ];
     }
 }
