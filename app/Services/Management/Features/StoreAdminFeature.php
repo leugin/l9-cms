@@ -2,16 +2,13 @@
 
 namespace App\Services\Management\Features;
 
+use App\Data\Dto\CreateAdminDto;
 use App\Data\Dto\Page;
 use App\Data\Dto\TableAction;
+use App\Domains\Admin\Jobs\CreateAdminJob;
 use App\Domains\Admin\Requests\StoreAdminRequest;
 use App\Models\Admin;
-use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-use Inertia\Response;
 use Lucid\Units\Feature;
 
 class StoreAdminFeature extends Feature
@@ -23,7 +20,10 @@ class StoreAdminFeature extends Feature
     public function handle(StoreAdminRequest $request): RedirectResponse
     {
         /**@var Admin $admin*/
-        $admin = Admin::query()->create($request->toArray());
+
+        $admin =  $this->run(CreateAdminJob::class, [
+            'createAdminDto'=>CreateAdminDto::makeByArray($request->validated())
+        ]);
         return  redirect()->route('management.admins.edit', [$admin->id])->with('message', 'save');
     }
 
