@@ -15,8 +15,5 @@ interface ModuleRepository
      * @return Module[]
      */
     public function all():array;
-    /**
-     * @return Module[]
-     */
-    public function findByUser(Admin $admin):array;
+
 }

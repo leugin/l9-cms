@@ -12,11 +12,6 @@ use App\Models\Admin;
 class EloquentModuleRepository implements ModuleRepository
 {
 
-    public function findByUser(Admin $admin): array
-    {
-        return  [];
-    }
-
     public function all(): array
     {
 

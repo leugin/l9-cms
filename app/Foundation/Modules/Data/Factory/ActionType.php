@@ -11,5 +11,4 @@ use Stringable;
 enum ActionType:string
 {
     case REDIRECT = 'redirect';
-    case EDIT = 'edit';
 }
