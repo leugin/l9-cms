@@ -15,22 +15,8 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-Route::group(['prefix'=>'auth'], function () {
-    Route::get('login', function () {
-        return Inertia::render('Auth/Login');
-    });
-});
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth:admin', 'verified'])
-    ->name('dashboard');
+Route::redirect('/', 'management/auth/login');
+Route::redirect('/auth/login', 'management/auth/login');
+Route::redirect('/dashboard', 'management/dashboard');
 
 require __DIR__.'/auth.php';

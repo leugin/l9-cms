@@ -3,8 +3,6 @@
 namespace App\Foundation\Modules\Data\Dto;
 
 use App\Data\Contracts\Protectable;
-use App\Data\Dto\Page;
-use App\Data\Dto\TableAction;
 use App\Foundation\Modules\Data\Factory\Action;
 use App\Foundation\Modules\Traits\ArrayAccess;
 

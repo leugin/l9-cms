@@ -22,6 +22,7 @@ const menus = computed(() => {
 });
 
 onMounted(() => {
+    console.log(usePage().props.value)
     window.addEventListener('keydown', escape );
 })
 

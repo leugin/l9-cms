@@ -20,6 +20,7 @@ Route::group(['prefix' => 'management'], function() {
     Route::group(['prefix' => 'auth', 'middleware'=>['guest:admin']], function() {
         Route::get('login', [AuthenticatedSessionController::class, 'create'])
             ->name('management.login');
+
         Route::post('login', [AuthenticatedSessionController::class, 'store'])
             ->name('management.login.create')
         ;
