@@ -2,7 +2,7 @@
 
 namespace App\Foundation\Modules;
 
-use App\Data\Repository\EloquentModuleRepository;
+use App\Data\Repository\CacheModuleRepository;
 use App\Foundation\Modules\Data\Repository\ModuleRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,7 +15,7 @@ class ModuleProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(ModuleRepository::class, EloquentModuleRepository::class);
+        $this->app->singleton(ModuleRepository::class, CacheModuleRepository::class);
     }
 
     /**

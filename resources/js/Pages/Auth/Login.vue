@@ -1,5 +1,5 @@
 <script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import GuestLayout from '@/Pages/Management/Layouts/GuestLayout.vue';
 import { Head, Link, useForm , usePage} from '@inertiajs/inertia-vue3';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';

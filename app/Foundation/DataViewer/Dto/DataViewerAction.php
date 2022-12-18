@@ -1,18 +1,13 @@
 <?php
 
-namespace App\Data\Dto;
+namespace App\Foundation\DataViewer\Dto;
 
 
-use App\Data\Contracts\Protectable;
-
-
-class TableAction implements Protectable
+class DataViewerAction
 {
     const LOAD   = 'list';
-
     const CREATE = 'create';
     const EDIT = 'edit';
-
     const DELETE = 'delete';
     private function __construct(
         public string $type,
@@ -34,15 +29,4 @@ class TableAction implements Protectable
     public static function delete(string $route):self {
         return  new self(self::DELETE, $route);
     }
-
-    public function getLabel(): string
-    {
-        return  __($this->type);
-    }
-
-    public function getSlugPermission(): string
-    {
-        return str_replace('.','-',$this->route);
-    }
-
 }

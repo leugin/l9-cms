@@ -2,16 +2,19 @@
 
 namespace App\Services\Management\Modules;
 
-use App\Data\Dto\TableAction;
+use App\Data\Dto\ProtectableDataViewerAction;
+use App\Foundation\DataViewer\Dto\DataViewerAction;
 use App\Foundation\Modules\Data\Contracts\ModulableMenu;
 use App\Foundation\Modules\Data\Contracts\ModulableProtectable;
 use App\Foundation\Modules\Data\Factory\Action;
 
 class AdminModule implements  ModulableMenu, ModulableProtectable
 {
+    const KEY = 'admin';
+
     public function getModuleKey():string
     {
-        return  "admin";
+        return  self::KEY;
     }
     public function getModuleName():string
     {
@@ -27,10 +30,10 @@ class AdminModule implements  ModulableMenu, ModulableProtectable
 
     private function getTableActions(): array {
         return [
-            TableAction::create('management-admins-edit'),
-            TableAction::load('management-admins-datatable'),
-            TableAction::create('management-admins-store'),
-            TableAction::create('management-admins-update')
+            ProtectableDataViewerAction::load('management-admins-datatable'),
+            ProtectableDataViewerAction::create('management-admins-store'),
+            ProtectableDataViewerAction::edit('management-admins-update'),
+            ProtectableDataViewerAction::delete('management-admins-delete')
         ];
     }
 

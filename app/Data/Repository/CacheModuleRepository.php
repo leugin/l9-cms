@@ -2,21 +2,16 @@
 
 namespace App\Data\Repository;
 
-use App\Data\Dto\TableAction;
 use App\Foundation\Modules\Data\Contracts\Modulable;
-use App\Foundation\Modules\Data\Dto\ModuleAction;
-use App\Foundation\Modules\Data\Dto\Module;
 use App\Foundation\Modules\Data\Dto\SearchModule;
-use App\Foundation\Modules\Data\Factory\Action;
 use App\Foundation\Modules\Data\Repository\ModuleRepository;
-use App\Models\Admin;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
 /**
  *
  */
-class EloquentModuleRepository implements ModuleRepository
+class CacheModuleRepository implements ModuleRepository
 {
     /**
      *

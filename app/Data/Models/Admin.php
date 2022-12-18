@@ -3,7 +3,6 @@
 namespace App\Data\Models;
 
 use App\Data\Dto\Page;
-use App\Data\Dto\TableAction;
 
 class Admin
 {
