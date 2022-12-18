@@ -4,7 +4,7 @@ namespace App\Data\Dto;
 
 
 use App\Data\Contracts\Protectable;
-use Illuminate\Support\Str;
+
 
 class TableAction implements Protectable
 {
@@ -44,4 +44,5 @@ class TableAction implements Protectable
     {
         return str_replace('.','-',$this->route);
     }
+
 }

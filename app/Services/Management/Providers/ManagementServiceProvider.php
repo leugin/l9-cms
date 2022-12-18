@@ -4,6 +4,7 @@ namespace App\Services\Management\Providers;
 
 use App\Services\Management\Console\CreateAdmin;
 use App\Services\Management\Console\CreateRole;
+use App\Services\Management\Console\LoadModuleCommand;
 use App\Services\Management\Console\SetPermissionToAdmin;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\View;
@@ -22,6 +23,7 @@ class ManagementServiceProvider extends ServiceProvider
         CreateAdmin::class,
         CreateRole::class,
         SetPermissionToAdmin::class,
+        LoadModuleCommand::class
     ];
 
     /**

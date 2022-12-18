@@ -11,20 +11,19 @@ use Stringable;
  */
 class Action implements Protectable
 {
-    /**
-     *
-     */
-    const REDIRECT = 'redirect';
 
 
     /**
-     * @param string $type
+     * @param ProtectableCategory $type
+     * @param string $label
+     * @param string $route
+     * @param string $slug
      */
     private function __construct(
-        public readonly  ActionType $type,
-        public readonly  string $label,
-        public readonly  string $route,
-        public readonly  string $slug,
+        public readonly  ProtectableCategory $type,
+        public readonly  string              $label,
+        public readonly  string              $route,
+        public readonly  string              $slug,
     ) {
     }
 
@@ -34,11 +33,17 @@ class Action implements Protectable
      * @return static
      */
     public static function redirect(string $route, string $label, ?string $slug = null ):self {
-        return new  self(ActionType::REDIRECT, $label, $route, $slug?: Str::slug(str_replace('.','-',$route)));
+        return new  self(ProtectableCategory::REDIRECT, $label, $route, $slug?: Str::slug(str_replace('.','-',$route)));
     }
 
     public function getSlugPermission(): string
     {
         return  $this->slug;
     }
+
+    public function getLabel(): string
+    {
+        return  $this->label;
+    }
+
 }
