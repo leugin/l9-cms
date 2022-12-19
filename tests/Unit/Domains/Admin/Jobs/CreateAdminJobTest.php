@@ -13,18 +13,14 @@ class CreateAdminJobTest extends TestCase
     use WithFaker;
     public function testCreateAdminJob()
     {
-        $createAdminDto =  CreateAdminDto::makeByArray([
-            'name'=>$this->faker->name,
-            'email'=>$this->faker->safeEmail,
-            'password'=>$this->faker->password
-        ]);
+        $createAdminDto =  new CreateAdminDto($this->faker->name , $this->faker->safeEmail, $this->faker->password);
 
 
         $job = new  CreateAdminJob($createAdminDto);
         $job->handle();
 
         $this->assertDatabaseHas('admins', [
-            'email'=>$createAdminDto->email
+            'email'=>$createAdminDto->getEmail()
         ]);
 
 

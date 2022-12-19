@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Domains\Admin\Jobs;
 
@@ -10,14 +11,16 @@ use Lucid\Units\Job;
 
 class CreateAdminJob extends Job
 {
+    private  $createAdminDto;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(private readonly CreateAdminDto $createAdminDto)
+    public function __construct(CreateAdminDto $createAdminDto)
     {
-        //
+        $this->createAdminDto = $createAdminDto;
     }
 
     /**
@@ -25,13 +28,13 @@ class CreateAdminJob extends Job
      *
      * @return Model|Builder|Admin
      */
-    public function handle(): Model|Builder|Admin
+    public function handle():Admin
     {
         return Admin::query()
             ->create([
-                'name'=>$this->createAdminDto->name,
-                'email'=>$this->createAdminDto->email,
-                'password'=>$this->createAdminDto->password
+                'name'=>$this->createAdminDto->getName(),
+                'email'=>$this->createAdminDto->getEmail(),
+                'password'=>$this->createAdminDto->getPassword()
             ]);
     }
 }
