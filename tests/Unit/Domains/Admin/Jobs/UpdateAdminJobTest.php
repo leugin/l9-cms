@@ -31,7 +31,7 @@ class UpdateAdminJobTest extends TestCase
 
         $this->assertDatabaseHas('admins', [
             'id'=>$admin->id,
-            'email'=>$dto->email
+            'email'=>$dto->getEmail()
         ]);
 
     }

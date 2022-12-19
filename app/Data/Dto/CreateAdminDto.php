@@ -12,9 +12,9 @@ class CreateAdminDto implements Arrayable
 {
     use ReflectionArrayAccess;
 
-    private  $name;
-    private  $email;
-    private  $password;
+    private string $name;
+    private string $email;
+    private string $password;
 
     /**
      * @param string $name
