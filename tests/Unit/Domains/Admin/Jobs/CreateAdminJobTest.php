@@ -14,9 +14,9 @@ class CreateAdminJobTest extends TestCase
     public function testCreateAdminJob()
     {
         $createAdminDto =  new CreateAdminDto(
-            name: $this->faker->name,
-            email: $this->faker->safeEmail,
-            password: $this->faker->password
+            $this->faker->name,
+            $this->faker->safeEmail,
+            $this->faker->password
         );
 
 
@@ -24,7 +24,7 @@ class CreateAdminJobTest extends TestCase
         $job->handle();
 
         $this->assertDatabaseHas('admins', [
-            'email'=>$createAdminDto->email
+            'email'=>$createAdminDto->getEmail()
         ]);
 
 

@@ -11,7 +11,7 @@ use Lucid\Units\Job;
 
 class CreateAdminJob extends Job
 {
-    private CreateAdminDto $createAdminDto;
+    private $createAdminDto;
 
     /**
      * Create a new job instance.

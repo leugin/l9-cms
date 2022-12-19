@@ -17,10 +17,11 @@ class ExampleTest extends TestCase
     }
 
 
-    public function getGender(string $key):string|null {
-        return  match ($key) {
-            'h'=> 'Hombre',
-            'm'=>'mujer',
-        };
+    public function getGender(string $key):?string{
+        switch ($key) {
+            case 'h': return 'Hombre';
+            case  'm': return  'Mujer';
+            default : return null;
+        }
     }
 }

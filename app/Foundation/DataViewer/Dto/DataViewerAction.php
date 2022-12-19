@@ -5,13 +5,13 @@ namespace App\Foundation\DataViewer\Dto;
 
 class DataViewerAction
 {
-    final const LOAD   = 'list';
-    final const CREATE = 'create';
-    final const EDIT = 'edit';
-    final  const DELETE = 'delete';
+    const LOAD   = 'list';
+    const CREATE = 'create';
+    const EDIT = 'edit';
+    const DELETE = 'delete';
     private function __construct(
-        public string $type,
-        public string $route,
+        string $type,
+        string $route
      )
     {
     }
