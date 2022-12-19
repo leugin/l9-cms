@@ -24,7 +24,7 @@ class CreateAdminJobTest extends TestCase
         $job->handle();
 
         $this->assertDatabaseHas('admins', [
-            'email'=>$createAdminDto->getEmail()
+            'email'=>$createAdminDto->email
         ]);
 
 

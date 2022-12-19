@@ -19,9 +19,9 @@ class CreateAdminDto implements Arrayable
      * @param string $password
      */
     public function __construct(
-        private string $name,
-        private string $email,
-        private string $password
+        public readonly string $name,
+        public readonly string $email,
+        public readonly  string $password
     )
     {
 
@@ -35,13 +35,6 @@ class CreateAdminDto implements Arrayable
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
 
     /**
      * @return string
@@ -51,13 +44,7 @@ class CreateAdminDto implements Arrayable
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     */
-    public function setEmail(string $email): void
-    {
-        $this->email = $email;
-    }
+
 
     /**
      * @return string
@@ -67,13 +54,7 @@ class CreateAdminDto implements Arrayable
         return $this->password;
     }
 
-    /**
-     * @param string $password
-     */
-    public function setPassword(string $password): void
-    {
-        $this->password = $password;
-    }
+
 
     /**
      * @param array $params
