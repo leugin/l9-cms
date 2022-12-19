@@ -1,9 +1,6 @@
 <?php
 
-namespace App\Foundation\Modules\Data\Factory;
-
-use App\Data\Contracts\Protectable;
-use Stringable;
+namespace App\Foundation\Modules\Data\Enums;
 
 /**
  *

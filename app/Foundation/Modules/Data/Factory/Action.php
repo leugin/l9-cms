@@ -3,8 +3,8 @@
 namespace App\Foundation\Modules\Data\Factory;
 
 use App\Data\Contracts\Protectable;
+use App\Foundation\Modules\Data\Enums\ProtectableCategory;
 use Illuminate\Support\Str;
-use Stringable;
 
 /**
  *
@@ -20,10 +20,10 @@ class Action implements Protectable
      * @param string $slug
      */
     private function __construct(
-        public readonly  ProtectableCategory $type,
-        public readonly  string              $label,
-        public readonly  string              $route,
-        public readonly  string              $slug,
+        public   ProtectableCategory $type,
+        public   string              $label,
+        public   string              $route,
+        public   string              $slug,
     ) {
     }
 

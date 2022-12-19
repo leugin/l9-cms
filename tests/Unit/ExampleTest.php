@@ -13,6 +13,14 @@ class ExampleTest extends TestCase
      */
     public function test_that_true_is_true()
     {
-        $this->assertTrue(true);
+        $this->assertTrue($this->getGender('h') == 'Hombre');
+    }
+
+
+    public function getGender(string $key):string|null {
+        return  match ($key) {
+            'h'=> 'Hombre',
+            'm'=>'mujer',
+        };
     }
 }

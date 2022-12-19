@@ -13,7 +13,7 @@ class UpdateAdminJob extends Job
      *
      * @return void
      */
-    public function __construct(private readonly  int $id, private readonly UpdateAdminDto $updateAdminDto)
+    public function __construct(private int $id, private  UpdateAdminDto $updateAdminDto)
     {
         //
     }
@@ -35,15 +35,13 @@ class UpdateAdminJob extends Job
 
     private function getFields(): array {
 
-        $rf = new \ReflectionClass($this->updateAdminDto);
-        $fields =  [];
 
-        foreach ($rf->getProperties() as $value ) {
-             if (!is_null($this->updateAdminDto->{$value->name})) {
-                $fields[$value->name]= $this->updateAdminDto->{$value->name};
-            }
 
-        }
-        return  $fields;
+        return  array_filter([
+            'name'=>$this->updateAdminDto->getName(),
+            'email'=>$this->updateAdminDto->getEmail(),
+            'password'=>$this->updateAdminDto->getPassword()
+
+        ], function ($val) { return !is_null($val);});
     }
 }

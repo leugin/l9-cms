@@ -34,5 +34,7 @@ class UpdateAdminJobTest extends TestCase
             'email'=>$dto->getEmail()
         ]);
 
+        //$this->assertTrue(is_null($dto->getPassword()?->value));
+
     }
 }

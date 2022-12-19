@@ -12,9 +12,6 @@ class CreateAdminDto implements Arrayable
 {
     use ReflectionArrayAccess;
 
-    private string $name;
-    private string $email;
-    private string $password;
 
     /**
      * @param string $name
@@ -22,14 +19,12 @@ class CreateAdminDto implements Arrayable
      * @param string $password
      */
     public function __construct(
-        string $name,
-        string $email,
-        string $password
+        private string $name,
+        private string $email,
+        private string $password
     )
     {
-        $this->name = $name;
-        $this->email = $email;
-        $this->password = $password;
+
     }
 
     /**

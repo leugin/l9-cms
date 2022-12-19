@@ -13,7 +13,11 @@ class CreateAdminJobTest extends TestCase
     use WithFaker;
     public function testCreateAdminJob()
     {
-        $createAdminDto =  new CreateAdminDto($this->faker->name , $this->faker->safeEmail, $this->faker->password);
+        $createAdminDto =  new CreateAdminDto(
+            name: $this->faker->name,
+            email: $this->faker->safeEmail,
+            password: $this->faker->password
+        );
 
 
         $job = new  CreateAdminJob($createAdminDto);

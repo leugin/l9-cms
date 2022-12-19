@@ -3,7 +3,6 @@
 namespace App\Operations;
 
 use App\Foundation\Modules\Data\Contracts\ModulableMenu;
-use App\Foundation\Modules\Data\Factory\ProtectableCategory;
 use App\Foundation\Modules\Data\Repository\ModuleRepository;
 use App\Models\Admin;
 use Lucid\Units\Operation;

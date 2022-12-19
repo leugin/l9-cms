@@ -14,7 +14,7 @@ class SearchAdminsJob extends Job
      *
      * @return void
      */
-    public function __construct(private readonly ?SearchAdmin $filter = null)
+    public function __construct(private  ?SearchAdmin $filter = null)
     {
         //
     }

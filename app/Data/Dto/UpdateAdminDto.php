@@ -3,6 +3,7 @@
 namespace App\Data\Dto;
 
 use App\Data\Helpers\ReflectionArrayAccess;
+use App\Data\Value\Password;
 use Illuminate\Contracts\Support\Arrayable;
 
 /**
@@ -11,19 +12,17 @@ use Illuminate\Contracts\Support\Arrayable;
 class UpdateAdminDto implements Arrayable
 {
     use ReflectionArrayAccess;
-    private string  $name;
-    private string  $email;
-    private ?string  $password;
+
 
     /**
      * @param string $name
      * @param string $email
-     * @param string|null $password
+     * @param string|Password|null $password
      */
     public function __construct(
-          string $name,
-          string $email,
-         ?string $password = null
+        private string $name,
+        private string $email,
+        string|null|Password $password = null
     )
     {
         $this->name = $name;
@@ -64,9 +63,9 @@ class UpdateAdminDto implements Arrayable
     }
 
     /**
-     * @return string|null
+     * @return string|Password|null
      */
-    public function getPassword(): ?string
+    public function getPassword(): null|string|Password
     {
         return $this->password;
     }
