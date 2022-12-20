@@ -43,7 +43,7 @@ onUnmounted(() => {
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                <NavLink :href="route('management.dashboard')" :active="route().current('management.dashboard')">
                                     Dashboard
                                 </NavLink>
                             </div>
@@ -79,7 +79,7 @@ onUnmounted(() => {
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" >
+                        <ResponsiveNavLink :href="route('management.dashboard')" >
                             Dashboard
                         </ResponsiveNavLink>
                     </div>
