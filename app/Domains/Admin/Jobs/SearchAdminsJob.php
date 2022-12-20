@@ -38,6 +38,21 @@ class SearchAdminsJob extends Job
                 {
                     return $query->where('id', '<>',$params->get('excludeId'));
                 })
+            ->when($params->get('search'),
+                function (Builder $query) use ($params)
+                {
+                    return $query->search($params->get('search'));
+                })
+            ->when($params->get('email'),
+                function (Builder $query) use ($params)
+                {
+                    return $query->where('email','like',"%{$params->get('email')}%");
+                })
+            ->when($params->get('name'),
+                function (Builder $query) use ($params)
+                {
+                    return $query->where('name','like',"%{$params->get('name')}%");
+                })
             ;
     }
 }

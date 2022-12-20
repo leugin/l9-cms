@@ -1,14 +1,19 @@
 <script setup>
 import AuthenticatedLayout from '@/Pages/Management/Layouts/AuthenticatedLayout.vue';
-import {Head, usePage} from '@inertiajs/inertia-vue3';
+import {Head, useForm, usePage} from '@inertiajs/inertia-vue3';
 import DataTable from 'primevue/datatable';
 import Button from 'primevue/button';
 import { Link } from '@inertiajs/inertia-vue3';
+import Dialog from 'primevue/dialog';
 
 import Column from 'primevue/column';
 import CrudService from  '../../../../Services/Admin'
 import {onMounted, ref} from "vue";
+import InputText from 'primevue/inputtext';
+import FormInput from "@/Components/FormInput.vue";
+
 const products = ref([]);
+const showDialog = ref(false);
 const totalRecords = ref(0);
 const perPage = ref(50);
 const loading = ref(true);
@@ -18,6 +23,11 @@ const api = new CrudService(route(usePage().props.value.route));
 const onPage = (ev) => {
     load({page: ev.page + 1})
 }
+const form = useForm({
+    search: '',
+    name: '',
+    email: ''
+});
 
 
 
@@ -52,13 +62,28 @@ defineProps({
     title: {
         type: String,
         default: ''
+    },
+    errors : {
+        type: Object,
+        default: {}
     }
 })
 
 onMounted(() => {
     load();
-    console.log(usePage().props.value)
 })
+const submit = (evt) => {
+    evt.preventDefault();
+    const filter = {};
+    for (const [key, value] of Object.entries(form.data())) {
+        if(value.trim() !== '') {
+            filter[key]= value;
+        }
+    }
+    load(filter);
+
+};
+
 </script>
 
 <template>
@@ -69,9 +94,27 @@ onMounted(() => {
             <template #header>
                 <div class="flex justify-between w-full	">
                     <h5 class="my-auto" style="margin-top: auto;margin-bottom: auto;">{{title}}</h5>
-                    <Link :href="route('management.admins.create')"  v-if="hasAllow('management-admins-create')">
-                        <Button label="Agregar" icon="pi pi-save"  class="p-button-info   p-button-sm  "/>
-                    </Link>
+                    <div class="flex gap-2">
+                        <div class="flex gap-1">
+                            <Link :href="route('management.admins.create')"  v-if="hasAllow('management-admins-create')">
+                                <Button label="Agregar" icon="pi pi-save"  class="p-button-info  p-button-sm  p-button-success"/>
+                            </Link>
+                        </div>
+                        <div class="flex gap-1">
+                            <InputText type="text" v-model="form.search" id="search" class="p-inputtext-sm" @keyup.enter="submit"  />
+                            <Link>
+                                <Button label="Buscar" icon="pi pi-search" autofocus @click="submit" class="  p-button-sm" />
+                            </Link>
+                            <Link>
+                                <Button label="" icon="pi pi-filter"  class="p-button-info  p-button-sm  " @click="showDialog = true; $event.preventDefault()"/>
+                            </Link>
+
+                        </div>
+
+                    </div>
+
+
+
                 </div>
 
             </template>
@@ -110,6 +153,27 @@ onMounted(() => {
 
             </DataTable>
         </Panel>
+        <Dialog v-model:visible="showDialog" :style="{width: '50vw'}">
+
+
+
+            <form @submit.prevent="submit">
+                <div class="">
+                    <div class=" max-w-5xl mx-auto py-6 px-4 sm:px-6 lg:px-8 p-fluid py-3" >
+                        <FormInput id="email" label="Email" :error="errors.email">
+                            <InputText type="email" v-model="form.email" id="email"  @keyup.enter="submit"  />
+                        </FormInput>
+                        <FormInput id="name" label="name" :error="errors.name">
+                            <InputText type="name" v-model="form.name" id="name"  @keyup.enter="submit"  />
+                        </FormInput>
+
+                    </div>
+                </div>
+            </form>
+            <template #footer>
+                 <Button label="Buscar" icon="pi pi-check" autofocus @click="submit" />
+            </template>
+        </Dialog>
     </AuthenticatedLayout>
 </template>
 
