@@ -135,6 +135,7 @@ const submit = (evt) => {
             >
                 <Column field="id" header="#" style="max-width: 30px"></Column>
                 <Column field="name" header="Nombre" style="width: auto"></Column>
+                <Column field="email" header="Email" style="width: auto"></Column>
                 <Column  header="-" style="max-width: 240px">
                     <template #body="slotProps">
                             <span class="p-buttonset m-2">

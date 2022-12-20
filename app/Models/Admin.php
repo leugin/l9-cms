@@ -18,6 +18,7 @@ use Spatie\Permission\Traits\HasRoles;
  *
  * @property-read int id
  * @property string name
+ * @property string email
  * @property string password;
  * @property DateTime created_at
  * @property DateTime updated_at
