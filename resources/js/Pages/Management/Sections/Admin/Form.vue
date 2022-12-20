@@ -24,7 +24,7 @@ defineProps({
 
 const canSave = computed(() => usePage().props.value.auth.permissions.findIndex(val => val === 'management-admins-store'));
 const canEdit = computed(() => usePage().props.value.auth.permissions.findIndex(val => val === 'management-admins-update'));
-const isEdit = computed(() => !!usePage().props.value.model);
+const isEdit = computed(() => !!usePage().props.value.model?.id);
 const form = useForm({
     name: '',
     email: '',
@@ -33,7 +33,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    if (isEdit) {
+    if (usePage().props.value.model) {
         form.put(route('management.admins.update',[usePage().props.value.model.id]), {
             onSuccess: (res) => {
                 console.log(res)
