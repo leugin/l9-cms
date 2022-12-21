@@ -3,7 +3,7 @@
 namespace Tests\Unit\Domains\Admin\Jobs;
 
 use App\Data\Dto\CreateAdminDto;
-use App\Domains\Admin\Jobs\CreateAdminJob;
+use App\Domains\Admin\Jobs\StoreAdminJob;
 use App\Models\Admin;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -20,7 +20,7 @@ class CreateAdminJobTest extends TestCase
         ]);
 
 
-        $job = new  CreateAdminJob($createAdminDto);
+        $job = new  StoreAdminJob($createAdminDto);
         $job->handle();
 
         $this->assertDatabaseHas('admins', [

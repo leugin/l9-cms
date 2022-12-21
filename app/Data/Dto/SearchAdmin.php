@@ -13,6 +13,8 @@ class SearchAdmin extends Search
     /**
      * @param string|null $search
      * @param int|null $id
+     * @param string|null $email
+     * @param string|null $name
      * @param int|null $excludeId
      * @param int|null $perPage
      */

@@ -2,11 +2,15 @@
 
 namespace App\Services\Management\Console;
 
+use App\Data\Dto\SearchAdmin;
+use App\Domains\Admin\Jobs\FindAdminJob;
 use App\Models\Admin;
 use Illuminate\Console\Command;
+use Lucid\Bus\ServesFeatures;
 
 class CreateAdmin extends Command
 {
+    use ServesFeatures;
     /**
      * The name and signature of the console command.
      *
@@ -33,9 +37,9 @@ class CreateAdmin extends Command
         $name = $this->option('name');
 
         /**@var Admin $exists*/
-        $exists = Admin::query()
-            ->where('email', $email)
-            ->first()
+        $exists = $this->serve(FindAdminJob::class, [
+            'searchAdmin'=>SearchAdmin::make(['email'=>$email])
+        ])
         ;
 
         if ($exists) {

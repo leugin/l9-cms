@@ -3,7 +3,7 @@
 namespace App\Services\Management\Features;
 
 use App\Data\Dto\CreateAdminDto;
-use App\Domains\Admin\Jobs\CreateAdminJob;
+use App\Domains\Admin\Jobs\StoreAdminJob;
 use App\Domains\Admin\Requests\StoreAdminRequest;
 use App\Models\Admin;
 use Illuminate\Http\RedirectResponse;
@@ -19,7 +19,7 @@ class StoreAdminFeature extends Feature
     {
         /**@var Admin $admin*/
 
-        $admin =  $this->run(CreateAdminJob::class, [
+        $admin =  $this->run(StoreAdminJob::class, [
             'createAdminDto'=>CreateAdminDto::makeByArray($request->validated())
         ]);
         return  redirect()->route('management.admins.edit', [$admin->id])->with('message', 'save');

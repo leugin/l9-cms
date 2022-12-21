@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Lucid\Units\Job;
 
-class CreateAdminJob extends Job
+class StoreAdminJob extends Job
 {
     /**
      * Create a new job instance.
