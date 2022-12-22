@@ -7,4 +7,9 @@ export default class Admin {
     find(params = []) {
         return axios.get(this.api, {params})
     }
+
+    delete(url) {
+        console.log("delete", url)
+        return axios.delete(url);
+    }
 }

@@ -11,6 +11,7 @@
 |
 */
 
+use App\Data\Enums\AdminManagementRoute;
 use App\Services\Management\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Services\Management\Http\Controllers\Dashboard\DashboardController;
 use Illuminate\Support\Facades\Route;
@@ -33,29 +34,36 @@ Route::group(['prefix' => 'management'], function() {
         Route::group(['prefix'=>'admins'], function ()
         {
             Route::get('', [\App\Services\Management\Http\Controllers\AdminController::class,'index'])
-                ->name('management.admins.index')
-                ->middleware('can:management-admins-index')
+                ->name(AdminManagementRoute::DATA_VIEW->value)
+                ->middleware(AdminManagementRoute::DATA_VIEW->getMiddlewarePermission())
             ;
 
             Route::get('create', [\App\Services\Management\Http\Controllers\AdminController::class,'create'])
-                ->name('management.admins.create')
-                ->middleware('can:management-admins-create');
+                ->name(AdminManagementRoute::CREATE->value)
+                ->middleware(AdminManagementRoute::CREATE->getMiddlewarePermission());
 
             Route::get('edit/{admin}', [\App\Services\Management\Http\Controllers\AdminController::class,'edit'])
-                ->name('management.admins.edit')
-                ->middleware('can:management-admins-edit');
+                ->name(AdminManagementRoute::EDIT->value)
+                ->middleware(AdminManagementRoute::CREATE->getMiddlewarePermission());
 
             Route::put('{admin}', [\App\Services\Management\Http\Controllers\AdminController::class,'update'])
-                ->name('management.admins.update')
-                ->middleware('can:management-admins-update');
+                ->name(AdminManagementRoute::UPDATE->value)
+                ->middleware(AdminManagementRoute::UPDATE->getMiddlewarePermission())
+            ;
+
+
+            Route::delete('{admin}', [\App\Services\Management\Http\Controllers\AdminController::class,'delete'])
+                ->name(AdminManagementRoute::DELETE->value)
+                ->middleware(AdminManagementRoute::DELETE->getMiddlewarePermission())
+            ;
 
             Route::post('', [\App\Services\Management\Http\Controllers\AdminController::class,'store'])
-                ->name('management.admins.store')
-                ->middleware('can:management-admins-store');
+                ->name(AdminManagementRoute::STORE->value)
+                ->middleware(AdminManagementRoute::STORE->getMiddlewarePermission());
 
             Route::get('datatable', [\App\Services\Management\Http\Controllers\AdminController::class, 'datatable'])
-                ->name('management.admins.datatable')
-                ->middleware('can:management-admins-datatable')
+                ->name(AdminManagementRoute::DATA->value)
+                ->middleware(AdminManagementRoute::DATA->getMiddlewarePermission())
             ;
         });
 

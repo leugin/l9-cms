@@ -25,7 +25,8 @@ class AdminResource extends JsonResource
             'created_at'=>$this->created_at->format('d/m/y h:i:s'),
             'updated_at'=>$this->updated_at->format('d/m/y h:i:s'),
             'status'=>$this->status,
-            'status_title'=>$this->status_title
+            'status_title'=>$this->status_title,
+            'route_delete'=>$this->route_delete
         ];
     }
 }

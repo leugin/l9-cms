@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Data\Enums\AdminManagementRoute;
 use App\Data\Values\AdminStatus;
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
@@ -71,6 +72,12 @@ class Admin extends Authenticatable
     {
         return new Attribute(
             get: fn () => AdminStatus::createByValue($this->status)?->title(),
+        );
+    }
+    protected function routeDelete(): Attribute
+    {
+        return new Attribute(
+            get: fn () => route(AdminManagementRoute::DELETE->value, [$this->id]),
         );
     }
 

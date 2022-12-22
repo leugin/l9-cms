@@ -9,6 +9,7 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import PrimeVue from "primevue/config";
 import Sidebar from 'primevue/sidebar';
 import panel from 'primevue/panel';
+import ConfirmationService from 'primevue/confirmationservice';
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
@@ -20,6 +21,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .use(PrimeVue)
+            .use(ConfirmationService)
             .component('Sidebar', Sidebar)
             .component('Panel', panel)
             .mount(el);

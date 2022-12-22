@@ -1,16 +1,17 @@
 <script setup>
 import AuthenticatedLayout from '@/Pages/Management/Layouts/AuthenticatedLayout.vue';
 import {Head, useForm, usePage} from '@inertiajs/inertia-vue3';
+import { useConfirm } from "primevue/useconfirm";
+
 import DataTable from 'primevue/datatable';
 import Button from 'primevue/button';
 import { Link } from '@inertiajs/inertia-vue3';
-import Dialog from 'primevue/dialog';
 
 import Column from 'primevue/column';
 import CrudService from  '../../../../Services/Admin'
 import {onMounted, ref} from "vue";
 import InputText from 'primevue/inputtext';
-import FormInput from "@/Components/FormInput.vue";
+import ConfirmDialog from 'primevue/confirmdialog';
 import Filter from "@/Pages/Management/Sections/Admin/AdminFilter.vue";
 
 const products = ref([]);
@@ -18,6 +19,7 @@ const showDialog = ref(false);
 const totalRecords = ref(0);
 const perPage = ref(50);
 const loading = ref(true);
+const confirm = useConfirm();
 
 const api = new CrudService(route(usePage().props.value.route));
 
@@ -52,6 +54,26 @@ const load = (options = {}) => {
         totalRecords.value= res.data.meta.total
         loading.value= false;
     }).catch(()=> {loading.value = false})
+}
+
+const deleteRow = (row) =>  {
+    console.log(row.route_delete);
+    loading.value = true;
+
+    confirm.require({
+        message: 'Esta seguro de borrar?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+            api.delete(row.route_delete).then(()=> {
+                load();
+            });
+        },
+        onHide: ()=> {
+            loading.value = false;
+        }
+
+    });
 }
 defineProps({
     api:null,
@@ -148,6 +170,7 @@ const submit = (filter) => {
                                 </Link>
                                 <Button label="Delete" icon="pi pi-trash"  class="p-button-text p-button-danger   p-button-sm "
                                         v-if="hasAllow('management-admins-delete')"
+                                        @click="deleteRow(slotProps.data)"
                                 />
                             </span>
 
@@ -157,6 +180,8 @@ const submit = (filter) => {
             </DataTable>
         </Panel>
         <Filter :show="showDialog" @save="submit"></Filter>
+        <ConfirmDialog></ConfirmDialog>
+
      </AuthenticatedLayout>
 </template>
 

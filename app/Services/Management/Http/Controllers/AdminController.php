@@ -4,6 +4,7 @@ namespace App\Services\Management\Http\Controllers;
 
 use App\Models\Admin;
 use App\Services\Management\Features\CreateAdminFormFeature;
+use App\Services\Management\Features\DeleteAdminFeature;
 use App\Services\Management\Features\EditAdminFormFeature;
 use App\Services\Management\Features\SearchAdminsFeature;
 use App\Services\Management\Features\ShowAdminTableFeature;
@@ -32,6 +33,12 @@ class AdminController extends Controller
     }
     public function update(Admin $admin) {
         return  $this->serve(UpdateAdminFeature::class, [
+            'admin'=>$admin
+
+        ]);
+    }
+    public function delete(Admin $admin) {
+        return  $this->serve(DeleteAdminFeature::class, [
             'admin'=>$admin
 
         ]);

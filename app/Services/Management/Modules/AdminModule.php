@@ -3,7 +3,7 @@
 namespace App\Services\Management\Modules;
 
 use App\Data\Dto\ProtectableDataViewerAction;
-use App\Foundation\DataViewer\Dto\DataViewerAction;
+use App\Data\Enums\AdminManagementRoute;
 use App\Foundation\Modules\Data\Contracts\ModulableMenu;
 use App\Foundation\Modules\Data\Contracts\ModulableProtectable;
 use App\Foundation\Modules\Data\Factory\Action;
@@ -23,17 +23,17 @@ class AdminModule implements  ModulableMenu, ModulableProtectable
 
     public function getMenuActions(): array {
         return [
-            Action::redirect('management.admins.index', "List"),
-            Action::redirect('management.admins.create', "Crear")
+            Action::redirect(AdminManagementRoute::DATA_VIEW->value, "List"),
+            Action::redirect(AdminManagementRoute::CREATE->value, "Crear")
         ];
     }
 
     private function getTableActions(): array {
         return [
-            ProtectableDataViewerAction::load('management-admins-datatable'),
-            ProtectableDataViewerAction::create('management-admins-store'),
-            ProtectableDataViewerAction::edit('management-admins-update'),
-            ProtectableDataViewerAction::delete('management-admins-delete')
+            ProtectableDataViewerAction::load(AdminManagementRoute::DATA->value),
+            ProtectableDataViewerAction::create(AdminManagementRoute::CREATE->value),
+            ProtectableDataViewerAction::edit(AdminManagementRoute::UPDATE->value),
+            ProtectableDataViewerAction::delete(AdminManagementRoute::DELETE->value)
         ];
     }
 
