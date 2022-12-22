@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Data\Values\AdminStatus;
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -19,7 +20,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int id
  * @property string name
  * @property string email
- * @property string password;
+ * @property string password
+ * @property string status
  * @property DateTime created_at
  * @property DateTime updated_at
  */
@@ -36,6 +38,7 @@ class Admin extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'status',
         'password'
     ];
 
@@ -62,6 +65,13 @@ class Admin extends Authenticatable
                 ->orWhere('email', 'like', "%$search%")
                 ;
         });
+    }
+
+    protected function statusTitle(): Attribute
+    {
+        return new Attribute(
+            get: fn () => AdminStatus::createByValue($this->status)?->title(),
+        );
     }
 
 }
