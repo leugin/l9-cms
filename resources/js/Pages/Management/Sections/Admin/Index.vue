@@ -11,6 +11,7 @@ import CrudService from  '../../../../Services/Admin'
 import {onMounted, ref} from "vue";
 import InputText from 'primevue/inputtext';
 import FormInput from "@/Components/FormInput.vue";
+import Filter from "@/Pages/Management/Sections/Admin/AdminFilter.vue";
 
 const products = ref([]);
 const showDialog = ref(false);
@@ -72,14 +73,15 @@ defineProps({
 onMounted(() => {
     load();
 })
-const submit = (evt) => {
-    evt.preventDefault();
-    const filter = {};
-    for (const [key, value] of Object.entries(form.data())) {
-        if(value.trim() !== '') {
-            filter[key]= value;
-        }
-    }
+const submit = (filter) => {
+    console.log(filter);
+    // evt.preventDefault();
+    // const filter = {};
+    // for (const [key, value] of Object.entries(form.data())) {
+    //     if(value.trim() !== '') {
+    //         filter[key]= value;
+    //     }
+    // }
     load(filter);
 
 };
@@ -154,28 +156,8 @@ const submit = (evt) => {
 
             </DataTable>
         </Panel>
-        <Dialog v-model:visible="showDialog" :style="{width: '50vw'}">
-
-
-
-            <form @submit.prevent="submit">
-                <div class="">
-                    <div class=" max-w-5xl mx-auto py-6 px-4 sm:px-6 lg:px-8 p-fluid py-3" >
-                        <FormInput id="email" label="Email" :error="errors.email">
-                            <InputText type="email" v-model="form.email" id="email"  @keyup.enter="submit"  />
-                        </FormInput>
-                        <FormInput id="name" label="name" :error="errors.name">
-                            <InputText type="name" v-model="form.name" id="name"  @keyup.enter="submit"  />
-                        </FormInput>
-
-                    </div>
-                </div>
-            </form>
-            <template #footer>
-                 <Button label="Buscar" icon="pi pi-check" autofocus @click="submit" />
-            </template>
-        </Dialog>
-    </AuthenticatedLayout>
+        <Filter :show="showDialog" @save="submit"></Filter>
+     </AuthenticatedLayout>
 </template>
 
 <style lang="sass" scoped>
