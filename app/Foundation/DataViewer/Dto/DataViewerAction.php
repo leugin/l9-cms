@@ -17,16 +17,16 @@ class DataViewerAction
     }
 
     public static function create(string $route):self {
-        return  new self(self::CREATE, $route);
+        return  new static(self::CREATE, $route);
     }
     public static function load( string $route):self {
-        return  new self(self::LOAD, $route);
+        return  new static(self::LOAD, $route);
     }
     public static function edit(string $route):self {
-        return  new self(self::EDIT, $route);
+        return  new static(self::EDIT, $route);
     }
 
     public static function delete(string $route):self {
-        return  new self(self::DELETE, $route);
+        return  new static(self::DELETE, $route);
     }
 }

@@ -95,15 +95,14 @@ defineProps({
 onMounted(() => {
     load();
 })
-const submit = (filter) => {
-    console.log(filter);
-    // evt.preventDefault();
-    // const filter = {};
-    // for (const [key, value] of Object.entries(form.data())) {
-    //     if(value.trim() !== '') {
-    //         filter[key]= value;
-    //     }
-    // }
+const submit = (evt) => {
+     evt.preventDefault();
+    const filter = {};
+    for (const [key, value] of Object.entries(form.data())) {
+        if(value.trim() !== '') {
+            filter[key]= value;
+        }
+    }
     load(filter);
 
 };
@@ -116,30 +115,33 @@ const submit = (filter) => {
     <AuthenticatedLayout >
         <Panel style="padding: 0;" class="p-panel-content-w-full">
             <template #header>
-                <div class="flex justify-between w-full	">
-                    <h5 class="my-auto" style="margin-top: auto;margin-bottom: auto;">{{title}}</h5>
-                    <div class="flex gap-2">
+                <div class="flex flex-col w-full">
+                    <div class="flex justify-between flex-lg-grow-1 pb-5">
+                        <h5 class="my-auto" style="margin-top: auto;margin-bottom: auto;">{{title}}</h5>
+                    </div>
+                    <div class="flex justify-between flex-lg-grow-1	">
                         <div class="flex gap-1">
-                            <Link :href="route('management.admins.create')"  v-if="hasAllow('management-admins-create')">
-                                <Button label="Agregar" icon="pi pi-save"  class="p-button-info  p-button-sm  p-button-success"/>
-                            </Link>
-                        </div>
-                        <div class="flex gap-1">
-                            <InputText type="text" v-model="form.search" id="search" class="p-inputtext-sm" @keyup.enter="submit"  />
-                            <Link>
-                                <Button label="Buscar" icon="pi pi-search" autofocus @click="submit" class="  p-button-sm" />
+
+                            <InputText type="text" v-model="form.search" id="search" class="p-inputtext-sm hidden md:block" @keyup.enter="submit"  />
+                            <Link class="hidden md:block">
+                                <Button label="Buscar" icon="pi pi-search" autofocus @click="submit" class="  p-button-sm p-button-outlined  p-button-info " />
                             </Link>
                             <Link>
-                                <Button label="" icon="pi pi-filter"  class="p-button-info  p-button-sm  " @click="showDialog = true; $event.preventDefault()"/>
+                                <Button label="" icon="pi pi-filter"  class="p-button-outlined p-button-info  p-button-sm  " @click="showDialog = true; $event.preventDefault()"/>
                             </Link>
 
+
+                        </div>
+                        <div class="flex gap-1">
+                            <Link :href="route('management.admins.create')"  v-if="hasAllow('management-admins-create')">
+                                <Button label="Agregar" icon="pi pi-plus"  class=" p-button-sm "/>
+                            </Link>
                         </div>
 
                     </div>
 
-
-
                 </div>
+
 
             </template>
             <DataTable
@@ -151,9 +153,11 @@ const submit = (filter) => {
                 :lazy="true"
                 :loading="loading"
                 :scrollable="true"
-                scroll-height="calc(100vh - 190px)"
+                scroll-height="calc(100vh - 232px)"
                 @page="onPage($event)"
                 class="table-floating-paginator "
+                responsive-layout="stack"
+                breakpoint="960px"
 
 
             >
@@ -179,7 +183,7 @@ const submit = (filter) => {
 
             </DataTable>
         </Panel>
-        <Filter :show="showDialog" @save="submit"></Filter>
+        <Filter :show="showDialog" @save="submit" @hide="showDialog = false"></Filter>
         <ConfirmDialog></ConfirmDialog>
 
      </AuthenticatedLayout>

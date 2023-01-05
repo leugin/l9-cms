@@ -42,13 +42,18 @@ Route::group(['prefix' => 'management'], function() {
                 ->name(AdminManagementRoute::CREATE->value)
                 ->middleware(AdminManagementRoute::CREATE->getMiddlewarePermission());
 
+            Route::post('', [\App\Services\Management\Http\Controllers\AdminController::class,'store'])
+                ->name(AdminManagementRoute::STORE->value)
+                ->middleware(AdminManagementRoute::CREATE->getMiddlewarePermission());
+
+
             Route::get('edit/{admin}', [\App\Services\Management\Http\Controllers\AdminController::class,'edit'])
                 ->name(AdminManagementRoute::EDIT->value)
-                ->middleware(AdminManagementRoute::CREATE->getMiddlewarePermission());
+                ->middleware(AdminManagementRoute::EDIT->getMiddlewarePermission());
 
             Route::put('{admin}', [\App\Services\Management\Http\Controllers\AdminController::class,'update'])
                 ->name(AdminManagementRoute::UPDATE->value)
-                ->middleware(AdminManagementRoute::UPDATE->getMiddlewarePermission())
+                ->middleware(AdminManagementRoute::EDIT->getMiddlewarePermission())
             ;
 
 
@@ -56,10 +61,6 @@ Route::group(['prefix' => 'management'], function() {
                 ->name(AdminManagementRoute::DELETE->value)
                 ->middleware(AdminManagementRoute::DELETE->getMiddlewarePermission())
             ;
-
-            Route::post('', [\App\Services\Management\Http\Controllers\AdminController::class,'store'])
-                ->name(AdminManagementRoute::STORE->value)
-                ->middleware(AdminManagementRoute::STORE->getMiddlewarePermission());
 
             Route::get('datatable', [\App\Services\Management\Http\Controllers\AdminController::class, 'datatable'])
                 ->name(AdminManagementRoute::DATA->value)

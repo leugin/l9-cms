@@ -1,14 +1,8 @@
 <script setup>
-import AuthenticatedLayout from '@/Pages/Management/Layouts/AuthenticatedLayout.vue';
-import {Head, useForm, usePage} from '@inertiajs/inertia-vue3';
-import DataTable from 'primevue/datatable';
+import {Head, useForm} from '@inertiajs/inertia-vue3';
 import Button from 'primevue/button';
-import { Link } from '@inertiajs/inertia-vue3';
 import Dialog from 'primevue/dialog';
 
-import Column from 'primevue/column';
-import CrudService from  '../../../../Services/Admin'
-import {onMounted, ref} from "vue";
 import InputText from 'primevue/inputtext';
 import FormInput from "@/Components/FormInput.vue";
 
@@ -44,7 +38,7 @@ const submit = () => {
 </script>
 
 <template>
-    <Dialog v-model:visible="show" :style="{width: '50vw'}">
+    <Dialog v-model:visible="show" :style="{width: '50vw'}"  v-on:after-hide="emit('hide')">
 
 
 

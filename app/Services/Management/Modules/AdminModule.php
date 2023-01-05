@@ -32,7 +32,7 @@ class AdminModule implements  ModulableMenu, ModulableProtectable
         return [
             ProtectableDataViewerAction::load(AdminManagementRoute::DATA->value),
             ProtectableDataViewerAction::create(AdminManagementRoute::CREATE->value),
-            ProtectableDataViewerAction::edit(AdminManagementRoute::UPDATE->value),
+            ProtectableDataViewerAction::edit(AdminManagementRoute::EDIT->value),
             ProtectableDataViewerAction::delete(AdminManagementRoute::DELETE->value)
         ];
     }

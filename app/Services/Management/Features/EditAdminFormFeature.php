@@ -23,7 +23,7 @@ class EditAdminFormFeature extends Feature
      */
     public function handle(): Response
     {
-        return Inertia::render('Management/Sections/Admin/Form', [
+        return Inertia::render('Management/Sections/Admin/AdminForm', [
             'title'=>__('Edicion de administradores'),
             'model'=>$this->admin
         ]);
