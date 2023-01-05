@@ -144,28 +144,29 @@ const submit = (evt) => {
 
 
             </template>
-            <DataTable
-                :value="products"
-                dataKey="id"
-                :paginator="true"
-                :rows="perPage"
-                :totalRecords="totalRecords"
-                :lazy="true"
-                :loading="loading"
-                :scrollable="true"
-                scroll-height="calc(100vh - 232px)"
-                @page="onPage($event)"
-                class="table-floating-paginator "
-                responsive-layout="stack"
-                breakpoint="960px"
+            <main class="">
+                <DataTable
+                    :value="products"
+                    dataKey="id"
+                    :paginator="true"
+                    :rows="perPage"
+                    :totalRecords="totalRecords"
+                    :lazy="true"
+                    :loading="loading"
+                    :scrollable="true"
+                    scroll-height="calc(100vh - 232px)"
+                    @page="onPage($event)"
+                    class="table-floating-paginator "
+                    responsive-layout="stack"
+                    breakpoint="960px"
 
 
-            >
-                <Column field="id" header="#" style="max-width: 30px"></Column>
-                <Column field="name" header="Nombre" style="width: auto"></Column>
-                <Column field="email" header="Email" style="width: auto"></Column>
-                <Column  header="-" style="max-width: 240px">
-                    <template #body="slotProps">
+                >
+                    <Column field="id" header="#" style="max-width: 30px"></Column>
+                    <Column field="name" header="Nombre" style="width: auto"></Column>
+                    <Column field="email" header="Email" style="width: auto"></Column>
+                    <Column  header="-" style="max-width: 240px">
+                        <template #body="slotProps">
                             <span class="p-buttonset m-2">
                                 <Link :href="route('management.admins.edit', [slotProps.data.id])"
                                       v-if="hasAllow('management-admins-edit')" >
@@ -178,10 +179,12 @@ const submit = (evt) => {
                                 />
                             </span>
 
-                    </template>
-                </Column>
+                        </template>
+                    </Column>
 
-            </DataTable>
+                </DataTable>
+            </main>
+
         </Panel>
         <Filter :show="showDialog" @save="submit" @hide="showDialog = false"></Filter>
         <ConfirmDialog></ConfirmDialog>
