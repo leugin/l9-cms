@@ -4,6 +4,8 @@ body {
     #app {
         width: 100vw;
         height: 100vh;
+        max-width: 100vw;
+        max-height: 100vh;
         overflow: hidden;
         display: flex;
     }
@@ -23,9 +25,38 @@ body {
 }
 .table-floating-paginator {
     .p-paginator{
-        position: fixed;
+        //position: fixed;
         bottom: 0;
         width: 100%;
+    }
+
+}
+.p-column-title {
+    display: block !important
+}
+@media screen and (max-width: 960px) {
+
+    .p-datatable-table{
+        .p-datatable-thead {
+            display:none !important;
+        }
+        .p-datatable-tbody > tr {
+           flex-direction: column;
+        }
+        td:has( > .actions) {
+            background-color: whitesmoke;
+            justify-content: center !important;
+
+        }
+    }
+    .p-datatable .p-datatable-tbody > tr > td {
+        display: flex;
+        width: 100% !important;
+        align-items: center;
+        justify-content: space-between;
+        .p-column-title {
+            display: block;
+        }
     }
 
 }

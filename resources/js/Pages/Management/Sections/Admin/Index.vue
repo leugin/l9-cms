@@ -13,6 +13,7 @@ import {onMounted, ref} from "vue";
 import InputText from 'primevue/inputtext';
 import ConfirmDialog from 'primevue/confirmdialog';
 import Filter from "@/Pages/Management/Sections/Admin/AdminFilter.vue";
+import SectionContent from "@/Components/SectionContent.vue";
 
 const products = ref([]);
 const showDialog = ref(false);
@@ -57,7 +58,6 @@ const load = (options = {}) => {
 }
 
 const deleteRow = (row) =>  {
-    console.log(row.route_delete);
     loading.value = true;
 
     confirm.require({
@@ -70,6 +70,9 @@ const deleteRow = (row) =>  {
             });
         },
         onHide: ()=> {
+            loading.value = false;
+        },
+        reject: () => {
             loading.value = false;
         }
 
@@ -96,7 +99,7 @@ onMounted(() => {
     load();
 })
 const submit = (evt) => {
-     evt.preventDefault();
+    evt.preventDefault();
     const filter = {};
     for (const [key, value] of Object.entries(form.data())) {
         if(value.trim() !== '') {
@@ -111,85 +114,69 @@ const submit = (evt) => {
 
 <template>
     <Head title="Admin" />
+    <section-content>
+        <template v-slot:panel-left>
+            <InputText type="text" v-model="form.search" id="search" class="p-inputtext-sm hidden md:block" @keyup.enter="submit"  />
+            <Link class="hidden md:block">
+                <Button label="Buscar" icon="pi pi-search" autofocus @click="submit" class="  p-button-sm p-button-outlined  p-button-info " />
+            </Link>
+            <Link>
+                <Button label="" icon="pi pi-filter"  class="p-button-outlined p-button-info  p-button-sm  " @click="showDialog = true; $event.preventDefault()"/>
+            </Link>
+        </template>
+        <template v-slot:panel-right>
+            <Link :href="route('management.admins.create')"  v-if="hasAllow('management-admins-create')">
+                <Button label="Agregar" icon="pi pi-plus"  class=" p-button-sm "/>
+            </Link>
+        </template>
+        <DataTable
+            :value="products"
+            dataKey="id"
+            :paginator="true"
+            :rows="perPage"
+            :totalRecords="totalRecords"
+            :lazy="true"
+            :loading="loading"
+            :scrollable="true"
+            scroll-height="calc(100vh - 232px)"
+            @page="onPage($event)"
+            class="table-floating-paginator "
+            responsive-layout="stack"
+            breakpoint="960px"
+        >
+            <Column field="id" header="#" ></Column>
+            <Column field="name" header="Nombre" style="width: auto"></Column>
+            <Column field="email" header="Email" style="width: auto"></Column>
+            <Column   >
+                <template #header>
+                    <span class="hide md:block"></span>
+                </template>
+                <template #body="slotProps">
+                                    <span class="p-buttonset m-2 actions">
+                                        <Link :href="route('management.admins.edit', [slotProps.data.id])"
+                                              v-if="hasAllow('management-admins-edit')" >
+                                            <Button label="Editar" icon="pi pi-pencil" class="p-button-text p-button-warning p-button-sm "
+                                            />
+                                        </Link>
+                                        <Button label="Delete" icon="pi pi-trash"  class="p-button-text p-button-danger   p-button-sm "
+                                                v-if="hasAllow('management-admins-delete')"
+                                                @click="deleteRow(slotProps.data)"
+                                        />
+                                    </span>
 
-    <AuthenticatedLayout >
-        <Panel style="padding: 0;" class="p-panel-content-w-full">
-            <template #header>
-                <div class="flex flex-col w-full">
-                    <div class="flex justify-between flex-lg-grow-1 pb-5">
-                        <h5 class="my-auto" style="margin-top: auto;margin-bottom: auto;">{{title}}</h5>
-                    </div>
-                    <div class="flex justify-between flex-lg-grow-1	">
-                        <div class="flex gap-1">
+                </template>
+            </Column>
 
-                            <InputText type="text" v-model="form.search" id="search" class="p-inputtext-sm hidden md:block" @keyup.enter="submit"  />
-                            <Link class="hidden md:block">
-                                <Button label="Buscar" icon="pi pi-search" autofocus @click="submit" class="  p-button-sm p-button-outlined  p-button-info " />
-                            </Link>
-                            <Link>
-                                <Button label="" icon="pi pi-filter"  class="p-button-outlined p-button-info  p-button-sm  " @click="showDialog = true; $event.preventDefault()"/>
-                            </Link>
+        </DataTable>
+
+        <template slot="extra">
+                    <Filter :show="showDialog" @save="submit" @hide="showDialog = false"></Filter>
+                    <ConfirmDialog></ConfirmDialog>
+        </template>
 
 
-                        </div>
-                        <div class="flex gap-1">
-                            <Link :href="route('management.admins.create')"  v-if="hasAllow('management-admins-create')">
-                                <Button label="Agregar" icon="pi pi-plus"  class=" p-button-sm "/>
-                            </Link>
-                        </div>
+    </section-content>
 
-                    </div>
-
-                </div>
-
-
-            </template>
-            <main class="">
-                <DataTable
-                    :value="products"
-                    dataKey="id"
-                    :paginator="true"
-                    :rows="perPage"
-                    :totalRecords="totalRecords"
-                    :lazy="true"
-                    :loading="loading"
-                    :scrollable="true"
-                    scroll-height="calc(100vh - 232px)"
-                    @page="onPage($event)"
-                    class="table-floating-paginator "
-                    responsive-layout="stack"
-                    breakpoint="960px"
-
-
-                >
-                    <Column field="id" header="#" style="max-width: 30px"></Column>
-                    <Column field="name" header="Nombre" style="width: auto"></Column>
-                    <Column field="email" header="Email" style="width: auto"></Column>
-                    <Column  header="-" style="max-width: 240px">
-                        <template #body="slotProps">
-                            <span class="p-buttonset m-2">
-                                <Link :href="route('management.admins.edit', [slotProps.data.id])"
-                                      v-if="hasAllow('management-admins-edit')" >
-                                    <Button label="Editar" icon="pi pi-pencil" class="p-button-text p-button-warning p-button-sm "
-                                    />
-                                </Link>
-                                <Button label="Delete" icon="pi pi-trash"  class="p-button-text p-button-danger   p-button-sm "
-                                        v-if="hasAllow('management-admins-delete')"
-                                        @click="deleteRow(slotProps.data)"
-                                />
-                            </span>
-
-                        </template>
-                    </Column>
-
-                </DataTable>
-            </main>
-
-        </Panel>
-        <Filter :show="showDialog" @save="submit" @hide="showDialog = false"></Filter>
-        <ConfirmDialog></ConfirmDialog>
-
-     </AuthenticatedLayout>
 </template>
 
 <style lang="sass" scoped>
@@ -197,7 +184,7 @@ main
     height: calc(100vh - 134px)
     background-color: white
 .p-paginator
-    position: fixed
+    //position: fixed
     bottom: 0
     width: 100%
 </style>
