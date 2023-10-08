@@ -2,20 +2,19 @@
 
 namespace Database\Factories;
 
-use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Category>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SubCategory>
  */
-class CategoryFactory extends Factory
+class SubCategoryFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    public function definition()
     {
         return [
             //
