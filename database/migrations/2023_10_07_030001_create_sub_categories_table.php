@@ -18,16 +18,6 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->softDeletes();
-            $table->unsignedBigInteger('category_id')
-                ->nullable(false);
-            $table->unsignedBigInteger('sub_category_id')
-                ->nullable(false);
-            $table->unsignedBigInteger('child_category_id')
-                ->nullable(false);
-
-
-             $table->unsignedBigInteger('sub_category_id')
-                ->nullable(false);
 
             $table->foreignIdFor(Category::class, 'category_id')
                 ->nullable(false)
